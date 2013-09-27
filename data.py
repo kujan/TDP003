@@ -4,6 +4,7 @@
 import json
 
 def load(filename):
+    """Laddar in en JSON fil och returnerar den som en lista"""
     try:
         json_file = open(filename)
     except:
@@ -14,9 +15,11 @@ def load(filename):
 
 
 def get_project_count(db):
+    """Läser in hur många projekt vi har sparade"""
     return len(db)
 
 def get_project(db, id):
+    """Hämtar ett projekt genom att skriva vart det ska hämtas och id"""
     for project in db:
         if project["project_no"] == id:
             return project
@@ -24,6 +27,7 @@ def get_project(db, id):
     return None
 
 def search(db, sort_by=u'start_date', sort_order=u'desc', techniques=None, search=None, search_fields=None):
+    """Hämtar projekt som matchar det man har sökt på"""
     techniques_list  = []
     if techniques == None or techniques == []:
         techniques_list = db
@@ -77,6 +81,7 @@ def search(db, sort_by=u'start_date', sort_order=u'desc', techniques=None, searc
   #  return techniques_list
 
 def get_techniques(db):
+    """Hämtar alla tekniker som finns i filen och sorterar dom i bokstavsordning"""
     lista = []
     for techniques in db:
         if techniques["techniques_used"]:
@@ -84,6 +89,7 @@ def get_techniques(db):
     return sorted(set(lista))
 
 def get_technique_stats(db):
+    """Hämtar teknikerna och vilka projekt dom används i"""
     techniques_stats = {}
     techniques_list = get_techniques(db)
     for technique in techniques_list:
@@ -99,6 +105,7 @@ def get_technique_stats(db):
 
             
 def sort_list(lista, order, dictkey):
+    """Sorterar en lista i stigande eller sjunkande ordning och vad den ska sortera efter"""
     if order == "asc":
         lista = sorted(lista, key=lambda x: x[dictkey], reverse=False)    
     else:
